@@ -1731,10 +1731,18 @@ y_i^{(\phi)}
 </div>
 <div id="section-4" class="section level1 tabset">
 <h1>8.10.11</h1>
-<p>Capture-recapture: a statistician/fisherman is interested in N, the number of fish in a certain pond. He catches 100 fish, tags them, and throws them back. A few days later, he returns and catches fish until he has caught 20 tagged fish, at which point he has also caught 70 untagged fish. (That is, the second sample has 20 tagged fish out of 90 total.) <br> (a) Assuming that all fish are sampled independently and with equal probability, give the posterior distribution for N based on a noninformative prior distribution. (You can give the density in unnormalized form.) <br> <!-- Since it mentions the fisherman catches fish until he has caught 20 tagged fish, we can use negative-binomial likelihood function. --> Let X denote the number of fish that can be recaptured. <span class="math display">\[
+<p>Capture-recapture: a statistician/fisherman is interested in N, the number of fish in a certain pond. He catches 100 fish, tags them, and throws them back. A few days later, he returns and catches fish until he has caught 20 tagged fish, at which point he has also caught 70 untagged fish. (That is, the second sample has 20 tagged fish out of 90 total.) <br> (a) Assuming that all fish are sampled independently and with equal probability, give the posterior distribution for N based on a noninformative prior distribution. (You can give the density in unnormalized form.) <br> <!-- Since it mentions the fisherman catches fish until he has caught 20 tagged fish, we can use negative-binomial likelihood function. --> <!-- **Brain storm** --> <!-- First capture 100 fish, then we tag them, for the recapture, the probability of catching a tagged fish is $\frac{100}{N}$. Obviously, the recapture follows a stopping fule, then if X denotes the number of success, r denotes the number of tagged fish, then $X \sim NegBin(r, p)$ --> <span class="math display">\[
+x|N \sim NegBin(20, \frac{100}{N})\\
 p(N) \propto 1 \\
-f(x|N) = 
-\]</span></p>
+f(x|N) = \binom{x+19}{x}(1-\frac{100}{N})^{20}(\frac{100}{N})^x \\
+p(N|x) \propto (1-\frac{100}{N})^{20}(\frac{100}{N})^{x}
+\]</span> (b) Briefly discuss your prior distribution and also make sure your posterior distribution is proper. <br> <!-- $$ --> <!-- L(N) \sim (1-\frac{100}{N})^{20}(\frac{100}{N})^x \\ --> <!-- \frac{\partial l }{\partial N} = 20(1-\frac{100}{N})^{19}100(\frac{1}{N})^2 --> <!-- $$ --> I just used laplace prior when I don’t have information about N. Let <span class="math inline">\(M = \frac{100}{N}\)</span> <span class="math display">\[
+|J| = \frac{100}{M^2} \\
+p(M|x) \propto 100(1-M)^{20}M^{x-2} \propto M^{x-2}(1-M)^{20} \\
+M \sim Beta(x-2, 20)
+\]</span> Then the posterior distribution is a proper distribution.</p>
+<p><br> (c) Give the probability that the next fish caught by the fisherman is tagged. Write the result as a sum or integral - you do not need to evaluate it, the the result should not be a function of N.</p>
+<p><br> (d) THe statistician/fisherman checks hjis second catch of fish and realizes that, of the 20 ‘tagged’ fish, 15 are definitely tagged, but the other 5 may be tagged - he is not sure. Include this aspect of missing data in your model and give the new joint posterior density for all parameters (in unnormalized form).</p>
 </div>
 <div id="section-5" class="section level1 tabset">
 <h1>8.10.14</h1>
