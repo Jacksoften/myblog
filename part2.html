@@ -289,15 +289,43 @@ div.tocify {
 </div>
 <div id="section-3" class="section level1 tabset">
 <h1>4</h1>
-<p>14.10.1</p>
+<p>14.10.1<br> Analysis of radon measurements: <br> * Fit a linear regression to the logarithms of the radon measurements in Table 7.3, with indicator variables for the three countries and for whether a measurement was recorded on the first floor. Summerize your inferences in nontechnical terms. <br> * Suppose another house is sampled at random from Blue Earth Country. Sketch the posterior predictive distribution for its radon measurement and give a 95% predictive interval. Express the interval on the original (unlogged) scale. (Hint: you must consider the seperate possibilities of basement or first-floor measurement.)</p>
 </div>
 <div id="section-4" class="section level1 tabset">
 <h1>5</h1>
-<p>14.10.10</p>
+<p>14.10.10 <br> Lasoo regularization: Find a linear regression example, in an application are of interest to you, with many predictors. <br> * Do a lasso regression, that is, a Bayesian regression using a double-exponential prior distribution with hyperparameter <span class="math inline">\(\lambda\)</span> estimated from data, summarizing by the posterior mode of the coefficients.<br />
+* Get uncertainty in this estimate by boostrapping the data 100 times and repeating the above step for each bootstrap sample. <br> * Now fit a fully Bayesian lasso (that is, the same model as in first part but assigning a hypeprior to <span class="math inline">\(\lambda\)</span> and obtaining simulations over the entire posterior distribution. <br> * Compare your inferences in all three parts.</p>
 </div>
 <div id="section-5" class="section level1 tabset">
 <h1>6</h1>
-<p>Obtain the full conditionals for a Bayesian Lasso regression model assuming that , the scale of the penalization term, is randomly distributed according to a gamma distribution (see section 20.2).</p>
+<p>Obtain the full conditionals for a Bayesian Lasso regression model assuming that <span class="math inline">\(\lamba\)</span>, the scale of the penalization term, is randomly distributed according to a gamma distribution (see section 20.2). <span class="math display">\[
+\begin{aligned}
+y|\beta, \sigma^2 &amp;\sim N(\beta, \sigma^2I_p)  \\
+\pi(\beta | \sigma^2) &amp;= \Pi^p_{j=1} \frac{\lambda}{2\sqrt{\sigma^2}}e^{\frac{-\lambda|\beta_j|}{\sqrt{\sigma^2}}} \\
+\pi(\sigma^2) &amp;= \frac{1}{\sigma^2} \\
+\pi(\lambda) &amp;\sim Gamma(a, b)
+\end{aligned}
+\]</span> First, obtain the joint posterior distribution up to proportionality <span class="math display">\[
+p(\beta_1,\dots, \beta_p, \sigma^2, \lambda|y) \propto
+(\frac{1}{\sigma^2})^{p/2} exp\{-\frac{\sum^p_{i=1}(y_i-\beta_i)^2}{2\sigma^2}\}
+\lambda^p(\frac{1}{\sigma^2})^{p/2}e^{\frac{-\lambda\sum|\beta_j|}{\sqrt{\sigma^2}}} 
+\frac{1}{\sigma^2} 
+\lambda^{a-1}exp\{-b\lambda\}
+\]</span> Based on the above joint posterior, we cannot get all the full conditionals for gibbs sampler. Fortunately, we know that a Laplace distribution can be expressed as a scale mixture of normal distributions. I induce the latent variable to the <span class="math inline">\(\beta\)</span>’s. Now we have <span class="math display">\[
+\begin{aligned}
+y|\mu, X, \beta, \sigma^2 &amp;\sim N_n(\mu1_n+X\beta, \sigma^2I) \\
+\beta|\sigma^2, \tau_1^2, \dots, \tau_p^2 &amp;\sim N_p(0, \sigma^2D_\tau) \text{ where } D_\tau = diag(\tau_1^2, \dots, \tau_p^2) \\
+p(\sigma^2, \tau_1^2, \dots, \tau_p^2) &amp;\propto \pi(\sigma^2)\prod^p_{j=1}\frac{\lambda^2}{2}e^{-\frac{\lambda^2\tau_j^2}{2}} \\
+\pi(\sigma^2) &amp;= \frac{1}{\sigma^2} \\
+\pi(\lambda) &amp;\sim Gamma(a, b)
+\end{aligned}
+\]</span> Joint posterior distribution <span class="math display">\[
+\begin{aligned}
+f(y| \mu, X, \beta, \sigma^2) &amp;= (\frac{1}{2\pi\sigma^2})^{n/2} exp\{-(\mu 1_n - X\beta)'(\mu 1_n - X\beta)/\sigma^2\}  \\
+f(\beta|\sigma^2, \tau_1^2, \dots, \tau_p^2) &amp;= (\frac{1}{2\pi\sigma^2})^{n/2}|D_\tau|^{1/2}exp\{-\beta'|D_\tau|^{-1}\beta / \sigma^2\} \\
+f(\beta,\sigma^2, \tau^2,\lambda|y)&amp;=
+\end{aligned}
+\]</span></p>
 </div>
 
 
