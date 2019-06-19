@@ -1,0 +1,3 @@
+{% if jekll.environment == "producation" %}
+    <script src="my-analytics-script.js"></script>
+{% endif %}
