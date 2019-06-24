@@ -1,1 +1,1 @@
-Sitemap: myblog/sitemap.xml
+Sitemap: https://jacksoften.github.io/myblog/sitemap.xml
